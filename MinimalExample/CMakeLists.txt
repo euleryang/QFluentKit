@@ -9,8 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Test)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Gui Test)
 
 # 支持源码编译（QFluent 目标已存在）和已安装两种模式
 if(TARGET QFluent)
@@ -65,6 +65,24 @@ endif()
 
 target_link_libraries(MinimalExample PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(MinimalExample PRIVATE QFluent::QFluent)
+
+# Unit test target
+set(TEST_SOURCES
+    test_qfluent.cpp
+)
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(MinimalExampleTest
+        MANUAL_FINALIZATION
+        ${TEST_SOURCES}
+    )
+    qt_finalize_executable(MinimalExampleTest)
+else()
+    add_executable(MinimalExampleTest ${TEST_SOURCES})
+endif()
+target_link_libraries(MinimalExampleTest PRIVATE Qt${QT_VERSION_MAJOR}::Test)
+target_link_libraries(MinimalExampleTest PRIVATE Qt${QT_VERSION_MAJOR}::Gui)
+target_link_libraries(MinimalExampleTest PRIVATE QFluent::QFluent)
+add_test(NAME MinimalExampleTest COMMAND MinimalExampleTest)
 
 # Windows DWM API
 if(WIN32)
