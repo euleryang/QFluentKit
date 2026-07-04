@@ -1,16 +1,27 @@
-# C++ objects and libs
+# ==============================
+# C++ 编译产物
+# ==============================
 *.slo
 *.lo
 *.o
+*.obj
 *.a
+*.lib
 *.la
 *.lai
 *.so
 *.so.*
 *.dll
 *.dylib
+*.exe
+*.ilk
+*.pdb
+*.exp
+*.res
 
-# Qt-es
+# ==============================
+# Qt 自动生成文件
+# ==============================
 object_script.*.Release
 object_script.*.Debug
 *_plugin_import.cpp
@@ -31,32 +42,77 @@ Makefile*
 *build-*
 *.qm
 *.prl
-
-# Qt unit tests
 target_wrapper.*
-
-# QtCreator
 *.autosave
-
-# QtCreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
-
-# QtCreator CMake
 CMakeLists.txt.user*
-
-# QtCreator 4.8< compilation database
-compile_commands.json
-
-# QtCreator local machine specific files for imported projects
 *creator.user*
-
 *_qmlcache.qrc
 
-/build
+# ==============================
+# CMake 产物
+# ==============================
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+install_manifest.txt
+Makefile
+compile_commands.json
 
-/docs
+# ==============================
+# 构建目录
+# ==============================
+/build/
+/out/
+/dist/
+/install/
+cmake-build-*/
 
-/.claude
+# ==============================
+# IDE 配置
+# ==============================
+# Visual Studio
+.vs/
+*.suo
+*.ncb
+*.aps
+*.user
 
+# VS Code / CodeBuddy
+.vscode/
+
+# CLion
+.idea/
+cmake-build-*/
+
+# Qt Creator
+*.pro.user*
+*.qmlproject.user*
+
+# ==============================
+# 本地工具数据（不提交）
+# ==============================
+.codebuddy/
+.workbuddy/
+.claude/
 CLAUDE.md
+
+# ==============================
+# 系统文件
+# ==============================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ==============================
+# 日志文件
+# ==============================
+*.log
+
+# ==============================
+# 文档（项目文档，应提交）
+# ==============================
+# /docs/  ← 项目文档目录，已取消注释（需要提交）
