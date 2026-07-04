@@ -13,10 +13,6 @@ add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 add_subdirectory(QFluent)
 add_subdirectory(QFluentExample)
-
-# find_package(QFluent QUIET)
-# if(QFluent_FOUND)
-#     add_subdirectory(MinimalExample)
-# endif()
+add_subdirectory(MinimalExample)
 
 

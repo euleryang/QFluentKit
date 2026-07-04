@@ -11,7 +11,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-find_package(QFluent REQUIRED)
+
+# 支持源码编译（QFluent 目标已存在）和已安装两种模式
+if(TARGET QFluent)
+    # 源码编译模式：QFluent 目标已由主项目构建
+    message(STATUS "Using QFluent from source tree")
+else()
+    # 已安装模式：通过 find_package 查找
+    find_package(QFluent REQUIRED)
+endif()
 
 set(PROJECT_SOURCES
         main.cpp

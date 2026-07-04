@@ -47,10 +47,28 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(QFluent SHARED ${QFLUENT_CPP_SOURCES})
 
+# 提供 ALIAS 目标，使源码编译模式与安装后模式的目标名一致
+add_library(QFluent::QFluent ALIAS QFluent)
+
 target_sources(QFluent PRIVATE ${QFLUENT_HEADER_SOURCES})
 
+# 为源码编译模式创建模拟安装后的 include 目录结构
+# 使 #include <QFluent/Theme.h> 在构建时和安装后行为一致
+set(QFLUENT_BUILD_INCLUDE_DIR "${CMAKE_BINARY_DIR}/include")
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/
+     DESTINATION ${QFLUENT_BUILD_INCLUDE_DIR}/QFluent
+     FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
+     PATTERN "QFluent" EXCLUDE
+     PATTERN "Private" EXCLUDE)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/QFluent/
+     DESTINATION ${QFLUENT_BUILD_INCLUDE_DIR}/QFluent
+     FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
+     PATTERN "Private" EXCLUDE)
+
 target_include_directories(QFluent PUBLIC
+    $<BUILD_INTERFACE:${QFLUENT_BUILD_INCLUDE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/QFluent>
 )
 target_compile_definitions(QFluent PRIVATE QFLUENT_LIBRARY)
 
